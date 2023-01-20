@@ -38,7 +38,10 @@ namespace TrelloApi
         [Test]
         public async Task DeleteBoard()
         {
-            var response = await driver.DeleteBoard("63c9a6cadebc860255121866");
+            var allBoards = await driver.GetAllBoards();
+            var boardId = allBoards[^1].Id;
+
+            var response = await driver.DeleteBoard(boardId);
             response.Should().NotBeNull();
             response.Ok.Should().BeTrue();
         }
