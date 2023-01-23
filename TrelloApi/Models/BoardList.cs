@@ -2,7 +2,7 @@
 
 namespace TrelloApi.Models
 {
-    internal record BoardList
+    public record BoardList
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }

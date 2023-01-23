@@ -34,23 +34,41 @@ namespace TrelloApi
             });
         }
 
-        public async Task<List<BoardResponse>> GetAllBoards()
+        public async Task<TrelloApiResponse<List<BoardResponse>>> GetAllBoards()
         {
             var response = await RequestContext.GetAsync($"members/me/boards?fields=name&{TRELLO_AUTHORIZATION_PARAMS}");
-            return await response.JsonAsync<List<BoardResponse>>();
+            var trelloApiResponse = new TrelloApiResponse<List<BoardResponse>>
+            {
+                StatusCode = response.Status,
+                Data = response.Ok ? await response.JsonAsync<List<BoardResponse>>() : null
+            };
+
+            return trelloApiResponse;
         }
 
-        public async Task<BoardResponse> GetBoardById(string boardId)
+        public async Task<TrelloApiResponse<BoardResponse>> GetBoardById(string boardId)
         {
             var response = await RequestContext.GetAsync($"boards/{boardId}?fields=name,desc,url,shortUrl&lists=all&{TRELLO_AUTHORIZATION_PARAMS}");
-            return await response.JsonAsync<BoardResponse>();
+            var trelloApiResponse = new TrelloApiResponse<BoardResponse>
+            {
+                StatusCode = response.Status,
+                Data = response.Ok ? await response.JsonAsync<BoardResponse>() : null
+            };
+
+            return trelloApiResponse;
         }
 
-        public async Task<BoardResponse> CreateBoard(string boardName, string description = "")
+        public async Task<TrelloApiResponse<BoardResponse>> CreateBoard(string boardName, string description = "")
         {
             var response = await RequestContext.PostAsync($"boards?name={boardName}&desc={description}&{TRELLO_AUTHORIZATION_PARAMS}");
-            return await response.JsonAsync<BoardResponse>();
 
+            var trelloApiResponse = new TrelloApiResponse<BoardResponse>
+            {
+                StatusCode = response.Status,
+                Data = response.Ok ? await response.JsonAsync<BoardResponse>() : null
+            };
+
+            return trelloApiResponse;
         }
 
         public async Task<IAPIResponse> DeleteBoard(string boardId)
