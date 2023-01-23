@@ -1,4 +1,5 @@
 ﻿using Microsoft.Playwright;
+using TrelloApi.Clients;
 using TrelloApi.Models;
 
 namespace TrelloApi
@@ -8,21 +9,23 @@ namespace TrelloApi
         private readonly string? TRELLO_API_KEY;
         private readonly string? TRELLO_TOKEN;
         private readonly string TRELLO_AUTHORIZATION_PARAMS;
-
-        public IAPIRequestContext RequestContext;
+        private readonly IAPIRequestContext _requestContext;
+        private BoardsClient boardsClient;
 
         public TrelloApiDriver()
         {
             TRELLO_TOKEN = Environment.GetEnvironmentVariable("TRELLO_TOKEN");
             TRELLO_API_KEY = Environment.GetEnvironmentVariable("TRELLO_API_KEY");
 
-            if(TRELLO_TOKEN is null || (TRELLO_API_KEY is null))
+            if (TRELLO_TOKEN is null || (TRELLO_API_KEY is null))
             {
                 throw new NullReferenceException("TRELLO_TOKEN and TRELLO_API_KEY environment variables have to be set!");
             }
 
             TRELLO_AUTHORIZATION_PARAMS = $"key={TRELLO_API_KEY}&token={TRELLO_TOKEN}";
-            RequestContext = InitializeApiDriver().Result;
+
+            _requestContext = InitializeApiDriver().Result;
+            boardsClient = new BoardsClient(_requestContext, TRELLO_AUTHORIZATION_PARAMS);
         }
 
         public async Task<IAPIRequestContext> InitializeApiDriver()
@@ -34,47 +37,11 @@ namespace TrelloApi
             });
         }
 
-        public async Task<TrelloApiResponse<List<BoardResponse>>> GetAllBoards()
-        {
-            var response = await RequestContext.GetAsync($"members/me/boards?fields=name&{TRELLO_AUTHORIZATION_PARAMS}");
-            var trelloApiResponse = new TrelloApiResponse<List<BoardResponse>>
-            {
-                StatusCode = response.Status,
-                Data = response.Ok ? await response.JsonAsync<List<BoardResponse>>() : null
-            };
+        public async Task<TrelloApiResponse<List<BoardResponse>>> GetAllBoards() => await boardsClient.GetAllBoards();
+        public async Task<TrelloApiResponse<BoardResponse>> GetBoardById(string boardId) => await boardsClient.GetBoardById(boardId);
+        public async Task<TrelloApiResponse<BoardResponse>> CreateBoard(string boardName, string description = "") => await boardsClient.CreateBoard(boardName, description);
+        public async Task<IAPIResponse> DeleteBoard(string boardId) => await boardsClient.DeleteBoard(boardId);
+        public async Task<TrelloApiResponse<CardResponse>> CreateCardOnBoardsList(string boardName, string listName, string cardName) => await boardsClient.CreateCardOnBoardsList(boardName, listName, cardName);
 
-            return trelloApiResponse;
-        }
-
-        public async Task<TrelloApiResponse<BoardResponse>> GetBoardById(string boardId)
-        {
-            var response = await RequestContext.GetAsync($"boards/{boardId}?fields=name,desc,url,shortUrl&lists=all&{TRELLO_AUTHORIZATION_PARAMS}");
-            var trelloApiResponse = new TrelloApiResponse<BoardResponse>
-            {
-                StatusCode = response.Status,
-                Data = response.Ok ? await response.JsonAsync<BoardResponse>() : null
-            };
-
-            return trelloApiResponse;
-        }
-
-        public async Task<TrelloApiResponse<BoardResponse>> CreateBoard(string boardName, string description = "")
-        {
-            var response = await RequestContext.PostAsync($"boards?name={boardName}&desc={description}&{TRELLO_AUTHORIZATION_PARAMS}");
-
-            var trelloApiResponse = new TrelloApiResponse<BoardResponse>
-            {
-                StatusCode = response.Status,
-                Data = response.Ok ? await response.JsonAsync<BoardResponse>() : null
-            };
-
-            return trelloApiResponse;
-        }
-
-        public async Task<IAPIResponse> DeleteBoard(string boardId)
-        {
-            var response = await RequestContext.DeleteAsync($"boards/{boardId}?&{TRELLO_AUTHORIZATION_PARAMS}");
-            return response;
-        }
     }
 }

@@ -11,6 +11,6 @@ namespace TrelloApi.Models
         [JsonPropertyName("url")]
         public string Url { get; set; }
         [JsonPropertyName("lists")]
-        public List<BoardList> Lists { get; set; }
+        public List<BoardListResponse> Lists { get; set; }
     }
 }

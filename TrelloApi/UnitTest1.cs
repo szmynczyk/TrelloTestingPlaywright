@@ -44,5 +44,12 @@ namespace TrelloApi
             response.Should().NotBeNull();
             response.Ok.Should().BeTrue();
         }
+
+        [Test]
+        public async Task CreateCardOnBoardList()
+        {
+            var response = await driver.CreateCardOnBoardsList("Test board", "To Do", "Example card");
+            response.Data.Should().NotBeNull();
+        }
     }
 }
