@@ -17,5 +17,19 @@ namespace TrelloApi.Clients
 
             boardsClient = new BoardsClient(requestContext, TRELLO_AUTHORIZATION_PARAMS);
         }
+
+        public async Task<TrelloApiResponse<CardResponse>> CreateCardOnBoardsList(string boardName, string listName, string cardName)
+        {
+            var list = await boardsClient.GetListFromBoard(boardName, listName);
+
+            var response = await _requestContext.PostAsync($"cards?idList={list.Id}&name={cardName}&{TRELLO_AUTHORIZATION_PARAMS}");
+            var trelloApiResponse = new TrelloApiResponse<CardResponse>
+            {
+                StatusCode = response.Status,
+                Data = response.Ok ? await response.JsonAsync<CardResponse>() : null
+            };
+
+            return trelloApiResponse;
+        }
     }
 }

@@ -1,0 +1,5 @@
+{
+  "TrelloApiConfig": {
+    "BaseApiUrl": "https://api.trello.com/1/"
+  }
+}

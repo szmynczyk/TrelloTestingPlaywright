@@ -4,18 +4,15 @@ using TrelloTestingPlaywright.Pages;
 namespace TrelloTestingPlaywright.StepDefinitions
 {
     [Binding]
-    internal sealed class CreateNewTrelloBoardStepDefinitions
+    internal sealed class CreateNewTrelloBoardStepDefinitions : BaseStepDefinitions
     {
-        BasePlaywrightDriver _driver;
         MainPage _mainPage;
         CreateBoardDialog _createBoardDialog;
-        string newBoardName;
 
-        public CreateNewTrelloBoardStepDefinitions(BasePlaywrightDriver driver)
+        public CreateNewTrelloBoardStepDefinitions(BasePlaywright driver) : base(driver)
         {
-            _driver = driver;
-            _mainPage = new MainPage(_driver.Page);
-            _createBoardDialog = new CreateBoardDialog(_driver.Page);
+            _mainPage = new MainPage(BasePlaywrightDriver.Page);
+            _createBoardDialog = new CreateBoardDialog(BasePlaywrightDriver.Page);
         }
 
         [When(@"I click on Create new board element")]
@@ -33,14 +30,14 @@ namespace TrelloTestingPlaywright.StepDefinitions
         [When(@"create new board with title ""([^""]*)""")]
         public async Task WhenCreateNewBoardWithTitle(string boardTitle)
         {
-            newBoardName = await _createBoardDialog.FillBoardName(boardTitle);
+            await _createBoardDialog.FillBoardName(boardTitle);
             await _createBoardDialog.ClickCreateButton();
         }
 
         [Then(@"new board with name ""([^""]*)"" is visible on main page")]
-        public async Task ThenNewBoardWithNameIsVisibleOnMainPage(string boardName)
+        public async Task ThenNewBoardWithNameIsVisibleOnMainPage()
         {
-            await _driver.Page.GotoAsync("https://trello.com/u/szmynczyk_test/boards");
+            await BasePlaywrightDriver.Page.GotoAsync("https://trello.com/u/szmynczyk_test/boards");
         }
     }
 }

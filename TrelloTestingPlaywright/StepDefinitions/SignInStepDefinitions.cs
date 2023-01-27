@@ -4,23 +4,21 @@ using TrelloTestingPlaywright.Pages;
 namespace TrelloTestingPlaywright.StepDefinitions
 {
     [Binding]
-    internal class SignInStepDefinitions
+    internal class SignInStepDefinitions : BaseStepDefinitions
     {
-        BasePlaywrightDriver _driver;
         HomePage _homePage;
         LoginPage _loginPage;
 
-        public SignInStepDefinitions(BasePlaywrightDriver driver)
+        public SignInStepDefinitions(BasePlaywright basePlaywright) : base(basePlaywright)
         {
-            _driver = driver;
-            _homePage = new HomePage(_driver.Page);
-            _loginPage = new LoginPage(_driver.Page);
+            _homePage = new HomePage(BasePlaywrightDriver.Page);
+            _loginPage = new LoginPage(BasePlaywrightDriver.Page);
         }
 
         [Given(@"I go to main trello page")]
         public void GivenIGoToMainTrelloPage()
         {
-            _driver.Page.GotoAsync("https://trello.com/");
+            _homePage.GoTo();
         }
 
         [Given(@"I login with credentials ""([^""]*)"" ""([^""]*)""")]
@@ -33,9 +31,7 @@ namespace TrelloTestingPlaywright.StepDefinitions
         [Then(@"main page is displayed")]
         public void ThenMainPageIsDisplayed()
         {
-            _driver.Page.Url.Should().Contain("/boards");
+            BasePlaywrightDriver.Page.Url.Should().Contain("/boards");
         }
-
-
     }
 }
