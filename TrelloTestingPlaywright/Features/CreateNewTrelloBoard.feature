@@ -13,7 +13,7 @@ Scenario: Create new board
 	And I login with credentials "szmynczyk.test@interia.pl" "Test1234"
 	When I click on Create new board element
 	And create new board with title "<Board name>"
-	Then new board with name "<Board name>" is visible on main page
+	Then new board is visible on main page
 Examples: 
 | Board name     |
 | Some new board |

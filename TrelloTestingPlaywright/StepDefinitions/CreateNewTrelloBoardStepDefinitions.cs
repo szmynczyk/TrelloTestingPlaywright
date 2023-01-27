@@ -8,11 +8,13 @@ namespace TrelloTestingPlaywright.StepDefinitions
     {
         MainPage _mainPage;
         CreateBoardDialog _createBoardDialog;
+        private readonly ScenarioContext _scenarioContext;
 
-        public CreateNewTrelloBoardStepDefinitions(BasePlaywright driver) : base(driver)
+        public CreateNewTrelloBoardStepDefinitions(BasePlaywright driver, ScenarioContext scenarioContext) : base(driver)
         {
             _mainPage = new MainPage(BasePlaywrightDriver.Page);
             _createBoardDialog = new CreateBoardDialog(BasePlaywrightDriver.Page);
+            _scenarioContext = scenarioContext;
         }
 
         [When(@"I click on Create new board element")]
@@ -30,13 +32,16 @@ namespace TrelloTestingPlaywright.StepDefinitions
         [When(@"create new board with title ""([^""]*)""")]
         public async Task WhenCreateNewBoardWithTitle(string boardTitle)
         {
-            await _createBoardDialog.FillBoardName(boardTitle);
+            var boardName = await _createBoardDialog.FillBoardName(boardTitle);
+            _scenarioContext.Add("NewBoardName", boardName);
+
             await _createBoardDialog.ClickCreateButton();
         }
 
-        [Then(@"new board with name ""([^""]*)"" is visible on main page")]
-        public async Task ThenNewBoardWithNameIsVisibleOnMainPage()
+        [Then(@"new board is visible on main page")]
+        public async Task ThenNewBoardIsVisibleOnMainPage()
         {
+            var newBoardName = _scenarioContext["NewBoardName"];
             await BasePlaywrightDriver.Page.GotoAsync("https://trello.com/u/szmynczyk_test/boards");
         }
     }

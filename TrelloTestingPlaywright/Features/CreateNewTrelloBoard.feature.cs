@@ -158,7 +158,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And(string.Format("create new board with title \"{0}\"", boardName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 16
- testRunner.Then(string.Format("new board with name \"{0}\" is visible on main page", boardName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("new board is visible on main page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
