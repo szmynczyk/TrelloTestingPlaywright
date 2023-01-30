@@ -24,7 +24,7 @@ namespace TrelloApi.Clients
         public async Task<BoardListResponse> GetListFromBoard(string boardName, string listName)
         {
             var board = await GetBoardByName(boardName);
-            var list = board?.Lists.FirstOrDefault(x => x.Name == listName);
+            var list = board.Lists.FirstOrDefault(x => x.Name == listName);
             return list;
         }
 
@@ -34,6 +34,7 @@ namespace TrelloApi.Clients
             var trelloApiResponse = new TrelloApiResponse<List<BoardResponse>>
             {
                 StatusCode = response.Status,
+                Url = response.Url,
                 Data = response.Ok ? await response.JsonAsync<List<BoardResponse>>() : null
             };
 
@@ -46,19 +47,21 @@ namespace TrelloApi.Clients
             var trelloApiResponse = new TrelloApiResponse<BoardResponse>
             {
                 StatusCode = response.Status,
+                Url = response.Url,
                 Data = response.Ok ? await response.JsonAsync<BoardResponse>() : null
             };
 
             return trelloApiResponse;
         }
 
-        public async Task<TrelloApiResponse<BoardResponse>> CreateBoard(string boardName, string description = "")
+        public async Task<TrelloApiResponse<BoardResponse>> CreateBoard(string boardName)
         {
-            var response = await _requestContext.PostAsync($"boards?name={boardName}&desc={description}&{TRELLO_AUTHORIZATION_PARAMS}");
+            var response = await _requestContext.PostAsync($"boards?name={boardName}&{TRELLO_AUTHORIZATION_PARAMS}");
 
             var trelloApiResponse = new TrelloApiResponse<BoardResponse>
             {
                 StatusCode = response.Status,
+                Url = response.Url,
                 Data = response.Ok ? await response.JsonAsync<BoardResponse>() : null
             };
 

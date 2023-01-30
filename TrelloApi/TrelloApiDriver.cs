@@ -6,7 +6,7 @@ using TrelloApi.Models;
 
 namespace TrelloApi
 {
-    internal class TrelloApiDriver
+    public class TrelloApiDriver
     {
         private readonly string? TRELLO_API_KEY;
         private readonly string? TRELLO_TOKEN;
@@ -63,7 +63,7 @@ namespace TrelloApi
 
         public async Task<TrelloApiResponse<List<BoardResponse>>> GetAllBoards() => await boardsClient.GetAllBoards();
         public async Task<TrelloApiResponse<BoardResponse>> GetBoardById(string boardId) => await boardsClient.GetBoardById(boardId);
-        public async Task<TrelloApiResponse<BoardResponse>> CreateBoard(string boardName, string description = "") => await boardsClient.CreateBoard(boardName, description);
+        public async Task<TrelloApiResponse<BoardResponse>> CreateBoard(string boardName) => await boardsClient.CreateBoard(boardName);
         public async Task<IAPIResponse> DeleteBoard(string boardId) => await boardsClient.DeleteBoard(boardId);
         public async Task<TrelloApiResponse<CardResponse>> CreateCardOnBoardsList(string boardName, string listName, string cardName) => await cardsClient.CreateCardOnBoardsList(boardName, listName, cardName);
 
