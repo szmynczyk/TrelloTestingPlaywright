@@ -1,4 +1,5 @@
 ﻿using Microsoft.Playwright;
+using TrelloTestingPlaywright.Support;
 
 namespace TrelloTestingPlaywright.Pages
 {
@@ -21,7 +22,7 @@ namespace TrelloTestingPlaywright.Pages
             await _inputPassword.FillAsync("Test1234!");
 
             await _btnLogin.ClickAsync();
-            await _page.WaitForURLAsync("https://trello.com/");
+            await _page.WaitForURLAsync(TrelloConfig.BaseUrl);
         }
     }
 }
