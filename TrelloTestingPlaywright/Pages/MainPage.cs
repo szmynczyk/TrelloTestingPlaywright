@@ -6,6 +6,9 @@ namespace TrelloTestingPlaywright.Pages
     {
         IPage _page;
         ILocator _btnAddNewBoard => _page.Locator(".board-tile.mod-add");
+        ILocator _boardTile(string boardName) => _page.GetByRole(AriaRole.Link, new () { NameString = boardName }).Last;
+
+        ILocator _btnMainPage => _page.GetByRole(AriaRole.Link, new PageGetByRoleOptions() { NameString = "Back to home" });
 
         public MainPage(IPage page)
         {
@@ -19,7 +22,13 @@ namespace TrelloTestingPlaywright.Pages
 
         public async Task<bool> IsBoardWithNameVisibleOnMainPage(string boardName)
         {
-            return await _page.Locator("Your workspaces").IsVisibleAsync();
+            await _page.WaitForLoadStateAsync(LoadState.DOMContentLoaded);
+            return await _boardTile(boardName).IsVisibleAsync();
+        }
+
+        public async Task ClickBackToHomeButton()
+        {
+            await _btnMainPage.ClickAsync();
         }
     }
 }

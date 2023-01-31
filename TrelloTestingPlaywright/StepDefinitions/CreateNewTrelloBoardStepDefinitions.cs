@@ -41,8 +41,9 @@ namespace TrelloTestingPlaywright.StepDefinitions
         [Then(@"new board is visible on main page")]
         public async Task ThenNewBoardIsVisibleOnMainPage()
         {
-            var newBoardName = _scenarioContext["NewBoardName"];
-            await BasePlaywrightDriver.Page.GotoAsync("https://trello.com/u/szmynczyk_test/boards");
+            var newBoardName = _scenarioContext["NewBoardName"].ToString();
+            await _mainPage.ClickBackToHomeButton();
+            (await _mainPage.IsBoardWithNameVisibleOnMainPage(newBoardName)).Should().BeTrue();
         }
     }
 }

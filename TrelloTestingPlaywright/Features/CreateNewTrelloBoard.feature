@@ -12,8 +12,5 @@ Scenario: Create new board
 	Given I go to main trello page
 	And I login with credentials "szmynczyk.test@interia.pl" "Test1234"
 	When I click on Create new board element
-	And create new board with title "<Board name>"
+	And create new board with title "Some test board"
 	Then new board is visible on main page
-Examples: 
-| Board name     |
-| Some new board |

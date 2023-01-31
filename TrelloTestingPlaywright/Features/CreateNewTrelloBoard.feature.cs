@@ -118,12 +118,10 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Create new board")]
-        [NUnit.Framework.TestCaseAttribute("Some new board", null)]
-        public virtual void CreateNewBoard(string boardName, string[] exampleTags)
+        public virtual void CreateNewBoard()
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("Board name", boardName);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create new board", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 11
 this.ScenarioInitialize(scenarioInfo);
@@ -155,7 +153,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("I click on Create new board element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 15
- testRunner.And(string.Format("create new board with title \"{0}\"", boardName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("create new board with title \"Some test board\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 16
  testRunner.Then("new board is visible on main page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
