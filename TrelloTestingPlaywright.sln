@@ -5,7 +5,9 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloTestingPlaywright", "TrelloTestingPlaywright\TrelloTestingPlaywright.csproj", "{1708E05C-B626-4775-803D-C0A073F80849}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloApi", "TrelloApi\TrelloApi.csproj", "{CB46A2B3-4537-4D4A-AEC8-AC4E53123AF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrelloApi", "TrelloApi\TrelloApi.csproj", "{CB46A2B3-4537-4D4A-AEC8-AC4E53123AF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloApi.Tests", "TrelloApi.Tests\TrelloApi.Tests.csproj", "{8BDA0001-DAE9-4CFF-89D6-7B13994136DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CB46A2B3-4537-4D4A-AEC8-AC4E53123AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB46A2B3-4537-4D4A-AEC8-AC4E53123AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB46A2B3-4537-4D4A-AEC8-AC4E53123AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BDA0001-DAE9-4CFF-89D6-7B13994136DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BDA0001-DAE9-4CFF-89D6-7B13994136DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BDA0001-DAE9-4CFF-89D6-7B13994136DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BDA0001-DAE9-4CFF-89D6-7B13994136DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

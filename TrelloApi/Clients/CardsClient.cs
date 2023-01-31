@@ -26,6 +26,7 @@ namespace TrelloApi.Clients
             var trelloApiResponse = new TrelloApiResponse<CardResponse>
             {
                 StatusCode = response.Status,
+                Url = response.Url,
                 Data = response.Ok ? await response.JsonAsync<CardResponse>() : null
             };
 
