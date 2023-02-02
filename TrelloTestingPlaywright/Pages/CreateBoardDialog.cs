@@ -28,7 +28,7 @@ namespace TrelloTestingPlaywright.Pages
         public async Task ClickCreateButton()
         {
             await _btnCreateBoard.ClickAsync();
-            await _page.WaitForNavigationAsync();
+            await _page.WaitForURLAsync("**/b/**/some-test-board**");
         }
     }
 }
