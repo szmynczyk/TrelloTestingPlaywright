@@ -1,5 +1,6 @@
 using TrelloTestingPlaywright.Drivers;
 using TrelloTestingPlaywright.Pages;
+using TrelloTestingPlaywright.Pages.Components;
 
 namespace TrelloTestingPlaywright.StepDefinitions
 {
@@ -8,12 +9,14 @@ namespace TrelloTestingPlaywright.StepDefinitions
     {
         MainPage _mainPage;
         CreateBoardDialog _createBoardDialog;
+        MainBarComponent _mainBarComponent;
         private readonly ScenarioContext _scenarioContext;
 
         public CreateNewTrelloBoardStepDefinitions(BasePlaywright driver, ScenarioContext scenarioContext) : base(driver)
         {
             _mainPage = new MainPage(BasePlaywrightDriver.Page);
             _createBoardDialog = new CreateBoardDialog(BasePlaywrightDriver.Page);
+            _mainBarComponent = new MainBarComponent(BasePlaywrightDriver.Page);
             _scenarioContext = scenarioContext;
         }
 
@@ -34,15 +37,15 @@ namespace TrelloTestingPlaywright.StepDefinitions
         {
             var boardName = await _createBoardDialog.FillBoardName(boardTitle);
             _scenarioContext.Add("NewBoardName", boardName);
-
             await _createBoardDialog.ClickCreateButton();
         }
 
         [Then(@"new board is visible on main page")]
         public async Task ThenNewBoardIsVisibleOnMainPage()
         {
-            var newBoardName = _scenarioContext["NewBoardName"];
-            await BasePlaywrightDriver.Page.GotoAsync("https://trello.com/u/szmynczyk_test/boards");
+            var newBoardName = _scenarioContext["NewBoardName"].ToString();
+            await _mainBarComponent.ClickBackToHomeButton();
+            (await _mainPage.IsBoardWithNameVisibleOnMainPage(newBoardName)).Should().BeTrue();
         }
     }
 }

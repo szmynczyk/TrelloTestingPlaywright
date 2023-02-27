@@ -63,6 +63,7 @@ namespace TrelloApi
 
         public async Task<TrelloApiResponse<List<BoardResponse>>> GetAllBoards() => await boardsClient.GetAllBoards();
         public async Task<TrelloApiResponse<BoardResponse>> GetBoardById(string boardId) => await boardsClient.GetBoardById(boardId);
+        public async Task<BoardResponse> GetBoardByName(string boardName) => await boardsClient.GetBoardByName(boardName);
         public async Task<TrelloApiResponse<BoardResponse>> CreateBoard(string boardName) => await boardsClient.CreateBoard(boardName);
         public async Task<IAPIResponse> DeleteBoard(string boardId) => await boardsClient.DeleteBoard(boardId);
         public async Task<TrelloApiResponse<CardResponse>> CreateCardOnBoardsList(string boardName, string listName, string cardName) => await cardsClient.CreateCardOnBoardsList(boardName, listName, cardName);
